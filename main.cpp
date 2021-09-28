@@ -20,14 +20,10 @@ void CustomDraw();
 //개발자가 구현하는 Process
 //void KeyOnPress(char Key);
 //개발자가 구현하는 Render
-//void PostRender();\
-//배열 초기화
-//void ArrayInitialize();
-//void ArrayDisplay();
-//void ArrayShuffle();
+//void PostRender();
+
 
 bool ProcessBingo(char Key);
-
 
 void InitializeBingoPlayMap();
 
@@ -81,7 +77,7 @@ bool Process(char Key)
 void Draw()
 {
 	//system("cls"); //콘솔창 clear
-	cout << "그린다." << endl;
+	cout << endl << endl;
 
 	//PostRender();
 	CustomDraw();
@@ -99,42 +95,6 @@ void PostRender()
 {
 	cout << "Gold = " << Gold << endl;
 }
-
-//void ArrayInitialize()
-//{
-//	for (int i = 0; i < 9; i++)
-//	{
-//		BingoPlayMap[i] = i + 1;
-//	}
-//}
-//
-//void ArrayDisplay()
-//{
-//	for (int i = 0; i < 9; i++)
-//	{	
-//		cout << BingoPlayMap[i] << "\t";
-//	}
-//	cout << endl;
-//}
-//
-//void ArrayShuffle()
-//{
-//	// srand(time(NULL));
-//
-//	//숫자 섞기 (shuffle)
-//	for (int i = 0; i < 9; i++)
-//	{
-//		// 배열에서 가져오는 자리1
-//		int R = rand() % 9;
-//		// 배열에서 가져오는 자리2
-//		int R2 = rand() % 9;
-//
-//		// 배열 자리 섞음
-//		int Temp = BingoPlayMap[R];
-//		BingoPlayMap[R] = BingoPlayMap[R2];
-//		BingoPlayMap[R2] = Temp;
-//	}
-//}
 
 void Initialize()
 {
@@ -185,7 +145,8 @@ bool ProcessBingo(char Key)
 		if (BingoPlayMap[i] == Key - 48)
 		{
 			BingoPlayMap[i] = 'X';
-			cout << "맞췄다" << endl;
+			CustomTerminate();
+			cout << endl;
 			break;
 		}
 	}
@@ -196,7 +157,7 @@ bool ProcessBingo(char Key)
 		if (BingoPlayMap[i + 0] == 'X' &&
 			BingoPlayMap[i + 1] == 'X' &&
 			BingoPlayMap[i + 2] == 'X') {
-			cout << "빙고" << endl;
+			cout << endl << "[ 빙고 ]" << endl;
 			return false;
 		}
 	}
@@ -207,7 +168,7 @@ bool ProcessBingo(char Key)
 		if (BingoPlayMap[i + 0] == 'X' &&
 			BingoPlayMap[i + 3] == 'X' &&
 			BingoPlayMap[i + 6] == 'X') {
-			cout << "빙고" << endl;
+			cout << endl << "[ 빙고 ]" << endl;
 			return false;
 		}
 	}
@@ -216,13 +177,13 @@ bool ProcessBingo(char Key)
 	if (BingoPlayMap[0] == 'X' &&
 		BingoPlayMap[4] == 'X' &&
 		BingoPlayMap[8] == 'X') {
-		cout << "빙고" << endl;
+		cout << endl << "[ 빙고 ]" << endl;
 		return false;
 	}
 	else if (BingoPlayMap[2] == 'X' &&
 			 BingoPlayMap[4] == 'X' &&
 			 BingoPlayMap[6] == 'X') {
-			 cout << "빙고" << endl;
+			 cout << endl << "[ 빙고 ]" << endl;
 			 return false;
 	}
 	return true;
