@@ -7,57 +7,52 @@ using namespace std;
 
 //엔진 개발자가 하는 일
 char Input();
-void Process(char Key);
-void Render();
-
-//개발자가 구현하는 Process
-void KeyOnPress(char Key);
-
-//개발자가 구현하는 Render
-void PostRender();
-
-//배열 초기화
-//void ArrayInitialize();
-//void ArrayDisplay();
-//void ArrayShuffle();
-
-//배열 선언
-int BingoPlayMap[9];
-
+bool Process(char Key);
+void Draw();
 void Initialize();
 void Terminate();
 
 void CustomInitialze();
 void CustomTerminate();
-void CustomProcess();
-void ProcessBingo();
+bool CustomProcess(char Key);
 void CustomDraw();
+
+//개발자가 구현하는 Process
+//void KeyOnPress(char Key);
+//개발자가 구현하는 Render
+//void PostRender();\
+//배열 초기화
+//void ArrayInitialize();
+//void ArrayDisplay();
+//void ArrayShuffle();
+
+bool ProcessBingo(char Key);
+
 
 void InitializeBingoPlayMap();
 
-bool bGameState = true;
+//배열 선언
+int BingoPlayMap[9];
 
 int Gold = 0;
 
 int main()
 {
+	bool bGameState = true;
 
 	Initialize();
 
 	while (bGameState)
 	{ 
-		//ArrayInitialize();
-		//ArrayShuffle();
-		//ArrayDisplay();
-
 		char Key = Input();
 		
-		Process(Key);
+		bGameState = Process(Key);
 
-		Render();
+		Draw();
 
 	}
 	Terminate();
+
 	return 0;
 }
 
@@ -71,21 +66,21 @@ char Input()
 	return Key;
 }
 
-void Process(char Key)
+bool Process(char Key)
 {
 	if (Key == 'q' || Key == 'Q')
 	{
-		bGameState = false;
+		return false;
 	}
 	//사용자(개발자)가 구현하는 Process
-	KeyOnPress(Key);
+//	KeyOnPress(Key);
 
-	CustomProcess();
+	return CustomProcess(Key);
 }
 
-void Render()
+void Draw()
 {
-	system("cls"); //콘솔창 clear
+	//system("cls"); //콘솔창 clear
 	cout << "그린다." << endl;
 
 	//PostRender();
@@ -150,6 +145,7 @@ void Initialize()
 void Terminate()
 {
 	CustomTerminate();
+
 }
 
 void CustomInitialze()
@@ -159,15 +155,77 @@ void CustomInitialze()
 
 void CustomTerminate()
 {
+	for (int i = 0; i < 9; i++)
+	{
+		if ( i % 3 == 0 && i != 0 )
+		{
+			cout << "\n";
+		}
+		if (BingoPlayMap[i] > 9)
+		{
+			cout << (char)BingoPlayMap[i] << " ";
+		}
+		else
+		{
+			cout << BingoPlayMap[i] << " ";
+		}
+	}
 }
 
-void CustomProcess()
+bool CustomProcess(char Key)
 {
-	ProcessBingo();
+	return ProcessBingo(Key);
 }
 
-void ProcessBingo()
+bool ProcessBingo(char Key)
 {
+	//빙고판에서 찾은 칸에 마킹한다.
+	for (int i = 0; i < 9; i++)
+	{
+		if (BingoPlayMap[i] == Key - 48)
+		{
+			BingoPlayMap[i] = 'X';
+			cout << "맞췄다" << endl;
+			break;
+		}
+	}
+
+	//가로 빙고인지 확인한다.
+	for (int i = 0; i <= 6; i = i + 3)
+	{
+		if (BingoPlayMap[i + 0] == 'X' &&
+			BingoPlayMap[i + 1] == 'X' &&
+			BingoPlayMap[i + 2] == 'X') {
+			cout << "빙고" << endl;
+			return false;
+		}
+	}
+
+	//세로 빙고인지 확인한다.
+	for (int i = 0; i <= 2; i++)
+	{
+		if (BingoPlayMap[i + 0] == 'X' &&
+			BingoPlayMap[i + 3] == 'X' &&
+			BingoPlayMap[i + 6] == 'X') {
+			cout << "빙고" << endl;
+			return false;
+		}
+	}
+
+	//대각선 빙고인지 확인한다.
+	if (BingoPlayMap[0] == 'X' &&
+		BingoPlayMap[4] == 'X' &&
+		BingoPlayMap[8] == 'X') {
+		cout << "빙고" << endl;
+		return false;
+	}
+	else if (BingoPlayMap[2] == 'X' &&
+			 BingoPlayMap[4] == 'X' &&
+			 BingoPlayMap[6] == 'X') {
+			 cout << "빙고" << endl;
+			 return false;
+	}
+	return true;
 }
 
 void CustomDraw()
