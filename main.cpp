@@ -3,17 +3,16 @@
 
 using namespace std;
 
-void Input();
-void Process();
+char Input();
+void Process(char Key);
 void Render();
 
 bool bGmaeState = true;
 
-char Key;
 
 int main()
 { 
-	// -- Game Engine이 하는 일 --
+	// -- Game Engine이 하는 일<Game Loop Pattern>--
 	// 
 	// 사용자의 입력을 받는다. (Input)
 	// 물체를 배치(수학계산)한다. (Process) 
@@ -22,20 +21,24 @@ int main()
 	//
 	while (bGmaeState)
 	{ 
-		Input();
-		Process();
+		char Key = Input();
+		Process(Key);
 		Render();
 	}
-
 	return 0;
 }
 
-void Input()
+char Input()
 {
+	//단순 콘솔 입력
+	char Key;
+
 	cin >> Key;
+
+	return Key;
 }
 
-void Process()
+void Process(char Key)
 {
 	if (Key == 'q' || Key == 'Q')
 	{
