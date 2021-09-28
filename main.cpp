@@ -3,12 +3,20 @@
 
 using namespace std;
 
+//엔진 개발자가 하는 일
 char Input();
 void Process(char Key);
 void Render();
 
+//개발자가 구현하는 Process
+void CustomProcess(char Key);
+
+//개발자가 구현하는 Render
+void CustomRender();
+
 bool bGmaeState = true;
 
+int Gold = 0;
 
 int main()
 { 
@@ -44,10 +52,27 @@ void Process(char Key)
 	{
 		bGmaeState = false;
 	}
+	//사용자(개발자)가 구현하는 Process
+	CustomProcess(Key);
 }
 
 void Render()
 {
 	system("cls"); //콘솔창 clear
 	cout << "그린다." << endl;
+
+	CustomRender();
+}
+
+void CustomProcess(char Key)
+{
+	if (Key == 'G' || Key == 'g') 
+	{
+		Gold++;
+	}
+}
+
+void CustomRender()
+{
+	cout << "Gold = " << Gold << endl;
 }
