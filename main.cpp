@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <windows.h> //windows 헤더파일 include
 
 using namespace std;
@@ -14,25 +16,48 @@ void KeyOnPress(char Key);
 //개발자가 구현하는 Render
 void PostRender();
 
-bool bGmaeState = true;
+//배열 초기화
+//void ArrayInitialize();
+//void ArrayDisplay();
+//void ArrayShuffle();
+
+//배열 선언
+int BingoPlayMap[9];
+
+void Initialize();
+void Terminate();
+
+void CustomInitialze();
+void CustomTerminate();
+void CustomProcess();
+void ProcessBingo();
+void CustomDraw();
+
+void InitializeBingoPlayMap();
+
+bool bGameState = true;
 
 int Gold = 0;
 
 int main()
-{ 
-	// -- Game Engine이 하는 일<Game Loop Pattern>--
-	// 
-	// 사용자의 입력을 받는다. (Input)
-	// 물체를 배치(수학계산)한다. (Process) 
-	// 그림을 그린다.(가상공간에서 사진 찍는다.) (Render)
-	// 
-	//
-	while (bGmaeState)
+{
+
+	Initialize();
+
+	while (bGameState)
 	{ 
+		//ArrayInitialize();
+		//ArrayShuffle();
+		//ArrayDisplay();
+
 		char Key = Input();
+		
 		Process(Key);
+
 		Render();
+
 	}
+	Terminate();
 	return 0;
 }
 
@@ -50,10 +75,12 @@ void Process(char Key)
 {
 	if (Key == 'q' || Key == 'Q')
 	{
-		bGmaeState = false;
+		bGameState = false;
 	}
 	//사용자(개발자)가 구현하는 Process
 	KeyOnPress(Key);
+
+	CustomProcess();
 }
 
 void Render()
@@ -61,7 +88,8 @@ void Render()
 	system("cls"); //콘솔창 clear
 	cout << "그린다." << endl;
 
-	PostRender();
+	//PostRender();
+	CustomDraw();
 }
 
 void KeyOnPress(char Key)
@@ -75,4 +103,96 @@ void KeyOnPress(char Key)
 void PostRender()
 {
 	cout << "Gold = " << Gold << endl;
+}
+
+//void ArrayInitialize()
+//{
+//	for (int i = 0; i < 9; i++)
+//	{
+//		BingoPlayMap[i] = i + 1;
+//	}
+//}
+//
+//void ArrayDisplay()
+//{
+//	for (int i = 0; i < 9; i++)
+//	{	
+//		cout << BingoPlayMap[i] << "\t";
+//	}
+//	cout << endl;
+//}
+//
+//void ArrayShuffle()
+//{
+//	// srand(time(NULL));
+//
+//	//숫자 섞기 (shuffle)
+//	for (int i = 0; i < 9; i++)
+//	{
+//		// 배열에서 가져오는 자리1
+//		int R = rand() % 9;
+//		// 배열에서 가져오는 자리2
+//		int R2 = rand() % 9;
+//
+//		// 배열 자리 섞음
+//		int Temp = BingoPlayMap[R];
+//		BingoPlayMap[R] = BingoPlayMap[R2];
+//		BingoPlayMap[R2] = Temp;
+//	}
+//}
+
+void Initialize()
+{
+	//초기화
+	CustomInitialze();
+}
+
+void Terminate()
+{
+	CustomTerminate();
+}
+
+void CustomInitialze()
+{
+	InitializeBingoPlayMap();
+}
+
+void CustomTerminate()
+{
+}
+
+void CustomProcess()
+{
+	ProcessBingo();
+}
+
+void ProcessBingo()
+{
+}
+
+void CustomDraw()
+{
+}
+
+void InitializeBingoPlayMap()
+{
+	for (int i = 0; i < 9; i++)
+	{
+		BingoPlayMap[i] = i + 1;
+	}
+
+	srand(static_cast<unsigned int>(time(nullptr)));
+
+	//숫자 섞기 (shuffle)
+	for (int i = 0; i < 100; i++)
+	{
+		// rand
+		int Index1 = rand() % 9;
+		int Index2 = rand() % 9;
+
+		// 배열 자리 섞음
+		int Temp = BingoPlayMap[Index1];
+		BingoPlayMap[Index1] = BingoPlayMap[Index2];
+		BingoPlayMap[Index2] = Temp;
+	}
 }
