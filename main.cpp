@@ -9,10 +9,10 @@ void Process(char Key);
 void Render();
 
 //개발자가 구현하는 Process
-void CustomProcess(char Key);
+void KeyOnPress(char Key);
 
 //개발자가 구현하는 Render
-void CustomRender();
+void PostRender();
 
 bool bGmaeState = true;
 
@@ -53,7 +53,7 @@ void Process(char Key)
 		bGmaeState = false;
 	}
 	//사용자(개발자)가 구현하는 Process
-	CustomProcess(Key);
+	KeyOnPress(Key);
 }
 
 void Render()
@@ -61,10 +61,10 @@ void Render()
 	system("cls"); //콘솔창 clear
 	cout << "그린다." << endl;
 
-	CustomRender();
+	PostRender();
 }
 
-void CustomProcess(char Key)
+void KeyOnPress(char Key)
 {
 	if (Key == 'G' || Key == 'g') 
 	{
@@ -72,7 +72,7 @@ void CustomProcess(char Key)
 	}
 }
 
-void CustomRender()
+void PostRender()
 {
 	cout << "Gold = " << Gold << endl;
 }
